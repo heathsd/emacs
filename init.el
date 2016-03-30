@@ -1,16 +1,43 @@
 (put 'upcase-region 'disabled nil)
-
+;; AUTOMATED PACKAGE MANAGEMENT
+;; List all desired packages here
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
+(defvar required-packages '(color-theme-sanityinc-tomorrow smart-mode-line evil-easymotion evil-org evil-leader evil-smartparens evil-tabs evil org-download org-pomodoro smartparens) "list of packages to install at launch")
+
+(require 'cl)
+; method to check if all packages are installed
+(defun packages-installed-p ()
+  (loop for p in required-packages
+        when (not (package-installed-p p)) do (return nil)
+        finally (return t)))
+
+; if not all packages are installed, check one by one and install the missing ones.
+(unless (packages-installed-p)
+  ; check for new packages (package versions)
+  (message "%s" "Emacs is now refreshing its package database...")
+  (package-refresh-contents)
+  (message "%s" " done.")
+  ; install the missing packages
+  (dolist (p required-packages)
+    (when (not (package-installed-p p))
+      (package-install p))))
+
+(require 'color-theme-sanityinc-tomorrow)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (wheatgrass)))
- '(org-agenda-files nil)
- '(package-selected-packages (quote (org-journal evil evil-easymotion evil-tutor))))
+ '(custom-enabled-themes (quote (sanityinc-tomorrow-night)))
+ '(custom-safe-themes
+   (quote
+    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b04425cc726711a6c91e8ebc20cf5a3927160681941e06bc7900a5a5bfe1a77f" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
+ '(org-agenda-files (quote ("~/Sync/org/work.org")))
+ '(package-selected-packages
+   (quote
+    (smart-mode-line-powerline-theme org-download evil evil-easymotion))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -18,27 +45,30 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; evil-leader
+(require 'evil-leader)
+(global-evil-leader-mode)
+(evil-leader/set-leader ",")
+;; evil-org
+(require 'evil-org)
+;; evil mode!!!
 (require 'evil)
 (evil-mode 1)
 
-;; org-mode stuffs
+;; org-mode
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-cb" 'org-iswitchb)
-(setq org-directory "C:\\users\\heath\\Sync\\org\\")
-;; org-journal
-(require 'org-journal)
-(setq org-journal-dir "C:\\users\\heath\\Sync\\org\\")
-(setq org-journal-file-format "journal.org")
-(setq org-journal-date-format "%Y\n** %m\n*** %A, %d")
-(setq org-journal-date-prefix "* ")
-(setq org-journal-time-format "%R ")
-(setq org-journal-time-prefix "**** ")
-(setq org-journal-hide-entries-p t)
-(setq org-agenda-include-diary t)
+(setq org-directory "~/Sync/org/")
 ;; org-mobile
-(setq org-mobile-directory "C:\\users\\heath\\Sync\\org\\mobileorg\\")
-(setq org-mobile-inbox-for-pull "C:\\users\\heath\\Sync\\org\\inbox.org")
-(setq org-mobile-files "C:\\users\\heath\\Sync\\org\\")
-(setq org-mobile-checksum-binary "C:\\users\\heath\\Sync\\apps\\sha1sum.exe")
+(setq org-mobile-directory "~/Sync/org/mobileorg/")
+(setq org-mobile-inbox-for-pull "~/Sync/org/inbox.org")
+(setq org-mobile-files "~/Sync/org/")
+(setq org-mobile-checksum-binary "~/Sync/apps/sha1sum.exe")
+;; org-download
+(require 'org-download)
+(setq-default org-download-image-dir "~/Sync/org/images")
+;; org-pomodoro
+(require 'org-pomodoro)
+(global-set-key (kbd "C-c p") 'org-pomodoro)
