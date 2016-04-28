@@ -4,7 +4,7 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
-(defvar required-packages '(auto-complete linum-relative sublime-themes fill-column-indicator color-theme-sanityinc-tomorrow smart-mode-line evil-easymotion evil-org evil-smartparens evil-tabs evil org-download org-pomodoro smartparens) "list of packages to install at launch")
+(defvar required-packages '(org-journal visual-fill-column git-auto-commit-mode auto-complete linum-relative sublime-themes fill-column-indicator color-theme-sanityinc-tomorrow smart-mode-line evil-easymotion evil-org evil-smartparens evil-tabs evil org-download org-pomodoro smartparens) "list of packages to install at launch")
 
 (require 'cl)
 ; method to check if all packages are installed
@@ -13,7 +13,8 @@
         when (not (package-installed-p p)) do (return nil)
         finally (return t)))
 
-; if not all packages are installed, check one by one and install the missing ones.
+; if not all packages are installed, check one by one and install the
+; missing ones.
 (unless (packages-installed-p)
   ; check for new packages (package versions)
   (message "%s" "Emacs is now refreshing its package database...")
@@ -34,7 +35,7 @@
  '(custom-safe-themes
    (quote
     ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b04425cc726711a6c91e8ebc20cf5a3927160681941e06bc7900a5a5bfe1a77f" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
- '(org-agenda-files (quote ("~/Sync/org/personal.org" "~/Sync/org/work.org")))
+ '(org-agenda-files (quote ("~/Sync/org/personal.org")))
  '(package-selected-packages
    (quote
     (smart-mode-line-powerline-theme org-download evil evil-easymotion))))
@@ -44,6 +45,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; Set up word-wrapping
+(add-hook 'text-mode-hook
+    '(lambda() (turn-on-auto-fill) (set-fill-column 80)))
+
 
 ;; evil mode!!!
 (require 'evil)
@@ -76,6 +82,15 @@
 ;; Enable auto-complete
 (ac-config-default)
 
+;; org-journal
+(require 'org-journal)
+(setq org-journal-dir "~/Sync/org/")
+(setq org-journal-file-format "journal.org")
+(setq org-journal-date-format "* %Y\n** %m - %B\n*** %d - %A\n")
+(setq org-journal-date-prefix "")
+(setq org-journal-time-format "<%Y-%m-%d %a %I:%M> ")
+(setq org-journal-time-prefix "**** ")
+
 ;; Startup stuff
 (setq inhibit-splash-screen t)
-(find-file "~/Sync/org/personal.org")
+(setq org-startup-indented t)
