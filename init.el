@@ -37,7 +37,7 @@
     ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b04425cc726711a6c91e8ebc20cf5a3927160681941e06bc7900a5a5bfe1a77f" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(org-agenda-files
    (quote
-    ("~/Sync/org/journal.org" "~/Sync/org/personal.org")))
+    ("~/Sync/org/journal.org" "~/Sync/org/personal.org" "~/Sync/org/journal/")))
  '(package-selected-packages
    (quote
     (smart-mode-line-powerline-theme org-download evil evil-easymotion))))
@@ -80,11 +80,10 @@
 
 ;; org-journal
 (require 'org-journal)
-(setq org-journal-dir "~/Sync/org/")
-(setq org-journal-file-format "journal.org")
-(setq org-journal-date-prefix "* ")
-(setq org-journal-date-format "%Y\n** %m - %b\n*** %d - %a\n")
-(setq org-journal-time-prefix "**** ")
+(setq org-journal-file-format "%Y%m%d.org")
+(setq org-journal-dir "~/Sync/org/journal/")
+
+(setq org-journal-time-prefix "* ")
 (setq org-journal-time-format "<%Y\-%m\-%d %a %H:%M> ")
 
 ;; Startup stuff
