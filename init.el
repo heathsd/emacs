@@ -86,6 +86,10 @@
 (setq org-journal-time-prefix "* ")
 (setq org-journal-time-format "<%Y\-%m\-%d %a %H:%M> ")
 
+;; Column fixes
+(setq-default fill-column 80)
+(setq column-number-mode t)
+
 ;; Startup stuff
 (setq line-move-visual t)
 (setq visual-line-mode t)
