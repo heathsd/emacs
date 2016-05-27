@@ -4,7 +4,7 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
-(defvar required-packages '(org-journal git-auto-commit-mode auto-complete linum-relative sublime-themes fill-column-indicator color-theme-sanityinc-tomorrow smart-mode-line evil-easymotion evil-org evil-smartparens evil-tabs evil org-download org-pomodoro smartparens) "list of packages to install at launch")
+(defvar required-packages '(org-journal git-auto-commit-mode auto-complete linum-relative evil-surround sublime-themes fill-column-indicator color-theme-sanityinc-tomorrow smart-mode-line evil-easymotion evil-org evil-smartparens evil-tabs evil org-download org-pomodoro smartparens) "list of packages to install at launch")
 
 (require 'cl)
 ; method to check if all packages are installed
@@ -37,7 +37,7 @@
     ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b04425cc726711a6c91e8ebc20cf5a3927160681941e06bc7900a5a5bfe1a77f" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(org-agenda-files
    (quote
-    ("~/Sync/org/journal.org" "~/Sync/org/personal.org" "~/Sync/org/journal/")))
+    ("c:/Sync/org/personal.org" "c:/Sync/org/vcs.org" "~/Sync/org/journal.org" "~/Sync/org/personal.org" "c:/Users/heath/Sync/org/journal/20160504.org")))
  '(package-selected-packages
    (quote
     (smart-mode-line-powerline-theme org-download evil evil-easymotion))))
@@ -58,6 +58,10 @@
 (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
 ; Make horizontal movement cross lines
 (setq-default evil-cross-lines t)
+(require 'evil-easymotion)
+(evilem-default-keybindings "SPC")
+(require 'evil-surround)
+(global-evil-surround-mode 1)
 
 ;; org-mode
 (global-set-key "\C-cl" 'org-store-link)
@@ -66,6 +70,15 @@
 (global-set-key "\C-cb" 'org-iswitchb)
 (setq org-directory "~/Sync/org/")
 (setq org-log-done 'time)
+(setq org-log-done 'note)
+(setq org-todo-keywords '((type "TODO" "WAITING" "Mike" "Dustin" "Jake" "|" "DONE")))
+(setq org-todo-keyword-faces
+      '(("TODO" . org-warning)
+	("WAITING" . "yellow")
+	("DONE" . "light green")
+	("Mike" . "orange") 
+	("Dustin" . "orange") 
+	("Jake" . "orange")))
 
 ;; org-download
 (require 'org-download)
@@ -87,11 +100,15 @@
 (setq org-journal-time-format "<%Y\-%m\-%d %a %H:%M> ")
 
 ;; Column fixes
-(setq-default fill-column 80)
 (setq column-number-mode t)
 
 ;; Startup stuff
+(setq hscroll-margin 5)
+(setq hscroll-step 1)
+(setq scroll-step 1)
+(setq scroll-conservatively 10000)
 (setq line-move-visual t)
 (setq visual-line-mode t)
 (setq inhibit-splash-screen t)
 (setq org-startup-indented t)
+
