@@ -6,7 +6,7 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
-(defvar required-packages '(git-auto-commit-mode auto-complete linum-relative evil-surround sublime-themes fill-column-indicator color-theme-sanityinc-tomorrow smart-mode-line evil-easymotion evil-org evil-smartparens evil-tabs evil org-download smartparens) "list of packages to install at launch")
+(defvar required-packages '(git-auto-commit-mode auto-complete relative-line-numbers evil-surround sublime-themes fill-column-indicator color-theme-sanityinc-tomorrow smart-mode-line evil-easymotion evil-org evil-smartparens evil-tabs evil org-download smartparens) "list of packages to install at launch")
 
 (require 'cl)
 ; method to check if all packages are installed
@@ -29,28 +29,35 @@
 
 (require 'color-theme-sanityinc-tomorrow)
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-  '(custom-enabled-themes (quote (sanityinc-tomorrow-night)))
-  '(custom-safe-themes
-     (quote
-       ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b04425cc726711a6c91e8ebc20cf5a3927160681941e06bc7900a5a5bfe1a77f" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
-  '(org-agenda-files (quote ("~/Dropbox/org/vcs.org")))
-  '(package-selected-packages
-     (quote
-       (smart-mode-line-powerline-theme org-download evil evil-easymotion))))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(custom-enabled-themes (quote (sanityinc-tomorrow-night)))
+ '(custom-safe-themes
+   (quote
+    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b04425cc726711a6c91e8ebc20cf5a3927160681941e06bc7900a5a5bfe1a77f" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
+ '(org-agenda-files (quote ("~/Dropbox/org/vcs.org")))
+ '(package-selected-packages
+   (quote
+    (smart-mode-line-powerline-theme org-download evil evil-easymotion))))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-  )
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd" :slant normal :weight normal :height 90 :width normal))))
+ '(org-mode-line-clock ((t (:background "grey75" :foreground "red" :box (:line-width -1 :style released-button)))) t))
 
 ;; EMACS CONFIG STUFF
 ;; Enable auto-complete
 (ac-config-default)
+
+;; 
+;; Relative Line Numbers
+;;
+(global-relative-line-numbers-mode)
 
 ;;
 ;; evil mode!!!
@@ -244,12 +251,7 @@
           'append)
 
 ;; The following custom-set-faces create the highlights
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-  '(org-mode-line-clock ((t (:background "grey75" :foreground "red" :box (:line-width -1 :style released-button)))) t))
+
 (setq org-agenda-span 'day)
 (setq org-agenda-dim-blocked-tasks nil)
 
